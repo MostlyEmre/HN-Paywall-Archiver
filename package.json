@@ -1,0 +1,15 @@
+{
+  "name": "hn-paywall-archive",
+  "version": "1.0.0",
+  "description": "NodeJS script to submit latest HackerNews posts to Archive.is",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "puppeteer": "^10.1.0"
+  }
+}
