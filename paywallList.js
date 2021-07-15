@@ -55,6 +55,7 @@ const paywallSites = {
   Handelsblatt: "handelsblatt.com",
   "Harper's Magazine": "harpers.org",
   "Hartford Courant": "courant.com",
+  "The Epoch Times": "theepochtimes.com",
   "Harvard Business Review": "hbr.org",
   "Herald Sun": "heraldsun.com.au",
   "Het Financieele Dagblad": "fd.nl",
