@@ -1,5 +1,6 @@
 - [HN Paywall Archive](#hn-paywall-archive)
   - [Usage](#usage)
+  - [Screenshot](#screenshot)
 
 # HN Paywall Archive
 
@@ -16,3 +17,6 @@ This script is created to assist my [hnn](https://github.com/EmreYYZ/hnn) projec
 ## Usage
 
 Download the repo, open the terminal `cd` into the folder and `node app` to run the script indefinitely.
+
+## Screenshot
+![HN paywall archiver is running and archiving](https://i.imgur.com/k9ZPWkh.png "HN paywall archiver is running and archiving")
