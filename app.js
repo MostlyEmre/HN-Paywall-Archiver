@@ -3,8 +3,7 @@ const puppeteer = require("puppeteer");
 
 // Import Paywall List
 const { paywallArray, testFunction } = require("./paywallList");
-// const date = Date.now();
-// const styledDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
 let latestHNPost;
 
 const badPostTypes = ["job", "comment", "poll", "pollopt"];
@@ -39,8 +38,7 @@ const getPostDetails = async (postID) => {
   const data = response.data;
   if (data !== null) {
     evaluateData(data);
-    // console.log(data.type);
-    // console.log(data);
+
     if (goodPostTypes.includes(data.type) && data.url) {
       let isPaywall = evaluateURL(data.url);
       if (isPaywall === true) {
@@ -98,7 +96,6 @@ const addPaywallToArchive = async (postID, postURL) => {
   await page.waitForNavigation({
     waitUntil: "networkidle0",
   });
-  await page.screenshot({ path: `buddy-screenshot${Math.random() * 100}.png` });
   console.log(`[${Date.now()}] -> ${postID} -> is archived... [${postURL}]`);
   await browser.close();
 };
