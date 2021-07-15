@@ -36,7 +36,6 @@ const getNewPosts = async () => {
 const getPostDetails = async (postID) => {
   const response = await axios(`https://hacker-news.firebaseio.com/v0/item/${postID}.json?print=pretty`);
   const data = response.data;
-
   if (data !== null) {
     evaluateData(data);
     // console.log(data.type);
@@ -45,6 +44,7 @@ const getPostDetails = async (postID) => {
       let isPaywall = evaluateURL(data.url);
       if (isPaywall === true) {
         console.log(`[${styledDate}] -> ${postID} -> URL is Paywalled: ${data.url}`);
+        addPaywallToArchive(data.id, data.url);
       } else {
         console.log(`[${styledDate}] -> ${postID} -> URL is NOT paywalled: ${data.url}`);
       }
@@ -55,8 +55,10 @@ const getPostDetails = async (postID) => {
         console.log(`[${styledDate}] -> ${postID} -> Bad Post type. [${data.type}]`);
       }
     }
-  } else {
+  } else if (data === null) {
     console.log(`[${styledDate}] -> ${postID} -> Data is null.`);
+  } else {
+    console.log(`[${styledDate}] -> ${postID} -> Something's wrong. [${data}].`);
   }
 
   // data !== null
@@ -92,8 +94,12 @@ const convertURL = (url) => {
 const evaluateData = (fullData) => {
   if (goodPostTypes.includes(fullData.type)) {
     console.log(fullData);
-    console.log(`[${styledDate}] -> ${data.id} -> Post type is good. [${data.type}]`);
+    console.log(`[${styledDate}] -> ${fullData.id} -> Post type is good. [${fullData.type}]`);
   }
+};
+
+const addPaywallToArchive = (postID, postURL) => {
+  console.log(`[${styledDate}] -> ${postID} -> Adding paywalled URL to archive.today... [${postURL}]`);
 };
 
 module.exports = {
