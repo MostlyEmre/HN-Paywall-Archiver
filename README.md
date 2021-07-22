@@ -20,4 +20,4 @@ Download the repo, open the terminal `cd` into the folder and `node app` to run 
 
 ## Screenshot
 
-![HN paywall archiver is running and archiving](blob:https://imgur.com/04828950-afa4-4931-b108-74410a21f7c0 "HN paywall archiver is running and archiving")
+![HN paywall archiver is running and archiving](https://i.imgur.com/jDhEoUl.png "HN paywall archiver is running and archiving")
