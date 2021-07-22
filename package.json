@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
+    "dayjs": "^1.10.6",
     "puppeteer": "^10.1.0"
   }
 }

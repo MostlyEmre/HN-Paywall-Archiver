@@ -1,8 +1,13 @@
 const axios = require("axios").default;
 const puppeteer = require("puppeteer");
+const dayjs = require("dayjs");
 
 // Import Paywall List
 const { paywallArray } = require("./paywallList");
+
+const logTime = () => {
+  return dayjs(Date.now()).format("YYYY-MM-DD HH:mm:ss SSS");
+};
 
 let latestHNPost;
 
@@ -22,14 +27,14 @@ const getNewPosts = async () => {
   const data = await response.data;
 
   if (response.status === 200 && data !== latestHNPost && data !== null) {
-    console.log(`[${Date.now()}] -> Latest Post: [${latestHNPost}]`);
+    console.log(`[${logTime()}] -> Latest Post: [${latestHNPost}]`);
     // const url = await getPostDetails(data);
 
     for (let i = latestHNPost + 1; i <= data; i++) {
       const url = await getPostDetails(i);
       // console.log(i);
     }
-    console.log(`[${Date.now()}] -> [!${response.status}], (${latestHNPost}) -> [${data}]`);
+    console.log(`[${logTime()}] -> [!${response.status}], (${latestHNPost}) -> [${data}]`);
     latestHNPost = data;
   }
 };
@@ -43,22 +48,22 @@ const getPostDetails = async (postID) => {
     if (goodPostTypes.includes(data.type) && data.url) {
       let isPaywall = evaluateURL(data.url);
       if (isPaywall === true) {
-        console.log(`[${Date.now()}] -> ${postID} -> URL is Paywalled: ${data.url}`);
+        console.log(`[${logTime()}] -> ${postID} -> URL is Paywalled: ${data.url}`);
         addPaywallToArchive(data.id, data.url);
       } else {
-        console.log(`[${Date.now()}] -> ${postID} -> URL is NOT paywalled: ${data.url}`);
+        console.log(`[${logTime()}] -> ${postID} -> URL is NOT paywalled: ${data.url}`);
       }
     } else {
       if (data.url === "") {
-        console.log(`[${Date.now()}] -> ${postID} -> Good Post, bad URL. [${data.url}]`);
+        console.log(`[${logTime()}] -> ${postID} -> Good Post, bad URL. [${data.url}]`);
       } else {
-        console.log(`[${Date.now()}] -> ${postID} -> Post is irrelevant because it is a [${data.type}]`);
+        console.log(`[${logTime()}] -> ${postID} -> Post is irrelevant because it is a [${data.type}]`);
       }
     }
   } else if (data === null) {
-    console.log(`[${Date.now()}] -> ${postID} -> Data is null.`);
+    console.log(`[${logTime()}] -> ${postID} -> Data is null.`);
   } else {
-    console.log(`[${Date.now()}] -> ${postID} -> Something's wrong. [${data}].`);
+    console.log(`[${logTime()}] -> ${postID} -> Something's wrong. [${data}].`);
   }
 };
 
@@ -84,12 +89,12 @@ const convertURL = (url) => {
 const evaluateData = (fullData) => {
   if (goodPostTypes.includes(fullData.type)) {
     console.log(fullData);
-    console.log(`[${Date.now()}] -> ${fullData.id} -> Post type is good. [${fullData.type}]`);
+    console.log(`[${logTime()}] -> ${fullData.id} -> Post type is good. [${fullData.type}]`);
   }
 };
 
 const addPaywallToArchive = async (postID, postURL) => {
-  console.log(`[${Date.now()}] -> ${postID} -> Adding paywalled URL to archive.today... [${postURL}]`);
+  console.log(`[${logTime()}] -> ${postID} -> Adding paywalled URL to archive.today... [${postURL}]`);
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(`https://archive.today/?run=1&url=${postURL}`, {
@@ -101,7 +106,7 @@ const addPaywallToArchive = async (postID, postURL) => {
   // await page.waitForNavigation({
   //   waitUntil: "networkidle0",
   // });
-  console.log(`[${Date.now()}] -> ${postID} -> is archived... [${postURL}]`);
+  console.log(`[${logTime()}] -> ${postID} -> is archived... [${postURL}]`);
   await browser.close();
 };
 
