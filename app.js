@@ -2,14 +2,15 @@ const axios = require("axios").default;
 const puppeteer = require("puppeteer");
 
 // Import Paywall List
-const { paywallArray, testFunction } = require("./paywallList");
+const { paywallArray } = require("./paywallList");
 
 let latestHNPost;
 
-const badPostTypes = ["job", "comment", "poll", "pollopt"];
-const noURLTypes = ["poll", "pollopt", "comment", "job"];
+// const badPostTypes = ["job", "comment", "poll", "pollopt"];
+// const noURLTypes = ["poll", "pollopt", "comment", "job"];
 const goodPostTypes = ["story"];
-const postsArray = [];
+// const postsArray = [];
+
 // fetch latest HN post
 
 setInterval(() => {
@@ -91,11 +92,15 @@ const addPaywallToArchive = async (postID, postURL) => {
   console.log(`[${Date.now()}] -> ${postID} -> Adding paywalled URL to archive.today... [${postURL}]`);
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto(`https://archive.today/?run=1&url=${postURL}`);
-  // other actions...
-  await page.waitForNavigation({
-    waitUntil: "networkidle0",
+  await page.goto(`https://archive.today/?run=1&url=${postURL}`, {
+    waitUntil: "domcontentloaded",
+    // Remove the timeout
+    timeout: 0,
   });
+  // other actions...
+  // await page.waitForNavigation({
+  //   waitUntil: "networkidle0",
+  // });
   console.log(`[${Date.now()}] -> ${postID} -> is archived... [${postURL}]`);
   await browser.close();
 };
