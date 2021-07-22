@@ -11,12 +11,9 @@ const logTime = () => {
 
 let latestHNPost;
 
-// const badPostTypes = ["job", "comment", "poll", "pollopt"];
-// const noURLTypes = ["poll", "pollopt", "comment", "job"];
 const goodPostTypes = ["story"];
-// const postsArray = [];
 
-// fetch latest HN post
+// fetch latest HN posts
 
 setInterval(() => {
   getNewPosts();
@@ -28,11 +25,9 @@ const getNewPosts = async () => {
 
   if (response.status === 200 && data !== latestHNPost && data !== null) {
     console.log(`[${logTime()}] -> Latest Post: [${latestHNPost}]`);
-    // const url = await getPostDetails(data);
 
     for (let i = latestHNPost + 1; i <= data; i++) {
       const url = await getPostDetails(i);
-      // console.log(i);
     }
     console.log(`[${logTime()}] -> [!${response.status}], (${latestHNPost}) -> [${data}]`);
     latestHNPost = data;
@@ -57,11 +52,11 @@ const getPostDetails = async (postID) => {
       if (data.url === "") {
         console.log(`[${logTime()}] -> ${postID} -> Good Post, bad URL. [${data.url}]`);
       } else {
-        console.log(`[${logTime()}] -> ${postID} -> Post is irrelevant because it is a [${data.type}]`);
+        // console.log(`[${logTime()}] -> ${postID} -> The post doesn't have a URL. [${data.type}]`);
       }
     }
   } else if (data === null) {
-    console.log(`[${logTime()}] -> ${postID} -> Data is null.`);
+    // console.log(`[${logTime()}] -> ${postID} -> Data is null.`);
   } else {
     console.log(`[${logTime()}] -> ${postID} -> Something's wrong. [${data}].`);
   }
@@ -89,7 +84,6 @@ const convertURL = (url) => {
 const evaluateData = (fullData) => {
   if (goodPostTypes.includes(fullData.type)) {
     console.log(fullData);
-    console.log(`[${logTime()}] -> ${fullData.id} -> Post type is good. [${fullData.type}]`);
   }
 };
 
@@ -98,15 +92,22 @@ const addPaywallToArchive = async (postID, postURL) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(`https://archive.today/?run=1&url=${postURL}`, {
-    waitUntil: "domcontentloaded",
+    waitUntil: "networkidle2",
     // Remove the timeout
     timeout: 0,
   });
-  // other actions...
-  // await page.waitForNavigation({
-  //   waitUntil: "networkidle0",
-  // });
-  console.log(`[${logTime()}] -> ${postID} -> is archived... [${postURL}]`);
+
+  // #DIVALREADY exists if the link is previously archived.
+  // If it doesn't exists, `img src="https://archive.ph/loading.gif"` is the loading tab.
+
+  await page.waitForTimeout(3000).then(() => {
+    if (page.url().includes("/wip/")) {
+      console.log(`[${logTime()}] -> ${postID} -> The page is currently being archived at [${page.url()}] -> [${postURL}]`);
+    } else {
+      console.log(`[${logTime()}] -> ${postID} -> Already archived? See: ${page.url()} -> [${postURL}]`);
+    }
+  });
+
   await browser.close();
 };
 
