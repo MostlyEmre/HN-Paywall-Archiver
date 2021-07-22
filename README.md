@@ -1,8 +1,8 @@
-- [HN Paywall Archive](#hn-paywall-archive)
+- [HN Paywall Archiver](#hn-paywall-archiver)
   - [Usage](#usage)
   - [Screenshot](#screenshot)
 
-# HN Paywall Archive
+# HN Paywall Archiver
 
 NodeJS script to submit latest HackerNews posts to Archive.is via Puppeteer and Firebase HackerNews API.
 
@@ -19,4 +19,5 @@ This script is created to assist my [hnn](https://github.com/EmreYYZ/hnn) projec
 Download the repo, open the terminal `cd` into the folder and `node app` to run the script indefinitely.
 
 ## Screenshot
-![HN paywall archiver is running and archiving](https://i.imgur.com/k9ZPWkh.png "HN paywall archiver is running and archiving")
+
+![HN paywall archiver is running and archiving](blob:https://imgur.com/04828950-afa4-4931-b108-74410a21f7c0 "HN paywall archiver is running and archiving")
