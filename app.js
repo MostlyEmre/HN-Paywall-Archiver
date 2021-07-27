@@ -20,17 +20,21 @@ setInterval(() => {
 }, 5000);
 
 const getNewPosts = async () => {
-  const response = await axios(`https://hacker-news.firebaseio.com/v0/maxitem.json?print=pretty`);
-  const data = await response.data;
+  try {
+    const response = await axios(`https://hacker-news.firebaseio.com/v0/maxitem.json?print=pretty`);
+    const data = await response.data;
 
-  if (response.status === 200 && data !== latestHNPost && data !== null) {
-    console.log(`[${logTime()}] -> Latest Post: [${latestHNPost}]`);
+    if (response.status === 200 && data !== latestHNPost && data !== null) {
+      console.log(`[${logTime()}] -> Latest Post: [${latestHNPost}]`);
 
-    for (let i = latestHNPost + 1; i <= data; i++) {
-      const url = await getPostDetails(i);
+      for (let i = latestHNPost + 1; i <= data; i++) {
+        const url = await getPostDetails(i);
+      }
+      console.log(`[${logTime()}] -> [!${response.status}], (${latestHNPost}) -> [${data}]`);
+      latestHNPost = data;
     }
-    console.log(`[${logTime()}] -> [!${response.status}], (${latestHNPost}) -> [${data}]`);
-    latestHNPost = data;
+  } catch (err) {
+    console.log(`[${logTime()}] -> ERROR! No:${err.errno} | Code: (${err.code}) | Response: [${err.response}] | URL: ${err.config.url}`);
   }
 };
 
