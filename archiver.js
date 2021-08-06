@@ -125,8 +125,46 @@ const addPaywallToArchive = async (postID, postURL) => {
 const addPoint = (url, isPaywalled) => {
   if (isPaywalled) {
     console.log(`[${logTime()}] -> [Firestore] Adding 1 point to: [${data.url}]`);
+
+    // if the site doesn't exist in Firestore, create a record for it make the total value 1. Else, add 1 point.
+
+    // Add point in general Paywalled
+
+    console.log(`[${logTime()}] -> [Firestore] Adding 1 point to PAYWALLED`);
+    //
+    let currentValue = 0;
+    db.collection("paywallStats")
+      .doc("paywalled")
+      .get()
+      .then((doc) => {
+        let paywalledRef = db.collection("paywallStats").doc("paywalled");
+        currentValue = doc.data().total;
+        paywalledRef.update({
+          total: currentValue + 1,
+        });
+        console.log(`[${logTime()}] -> [Firestore] Added 1 point to PAYWALLED`);
+      })
+      .catch((error) => {
+        console.log(`[${logTime()}] -> [Firestore] Error getting document while adding Point:`, error);
+      });
   } else {
     console.log(`[${logTime()}] -> [Firestore] Adding 1 point to NOT PAYWALLED`);
+    //
+    let currentValue = 0;
+    db.collection("paywallStats")
+      .doc("notPaywalled")
+      .get()
+      .then((doc) => {
+        let notPaywalledRef = db.collection("paywallStats").doc("notPaywalled");
+        currentValue = doc.data().total;
+        notPaywalledRef.update({
+          total: currentValue + 1,
+        });
+        console.log(`[${logTime()}] -> [Firestore] Added 1 point to NOT PAYWALLED`);
+      })
+      .catch((error) => {
+        console.log(`[${logTime()}] -> [Firestore] Error getting document while adding Point:`, error);
+      });
   }
 };
 
