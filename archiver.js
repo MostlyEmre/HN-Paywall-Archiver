@@ -22,6 +22,8 @@ setInterval(() => {
   getNewPosts();
 }, 5000);
 
+// GETS NEW POSTS FROM FIREBASE HN API
+// CHECKS IF THE DATA IS VALID
 const getNewPosts = async () => {
   try {
     const response = await axios(`https://hacker-news.firebaseio.com/v0/maxitem.json?print=pretty`);
@@ -37,10 +39,11 @@ const getNewPosts = async () => {
       latestHNPost = data;
     }
   } catch (err) {
-    console.log(`[${logTime()}] -> ERROR! No:${err.errno} | Code: (${err.code}) | Response: [${err.response}] | URL: ${err.config.url}`);
+    console.log(`[${logTime()}] -> ERROR!`, err);
   }
 };
 
+// ONCE THE DATA IS VERIFIED, GETS POST DETAILS
 const getPostDetails = async (postID) => {
   const response = await axios(`https://hacker-news.firebaseio.com/v0/item/${postID}.json?print=pretty`);
   const data = response.data;
@@ -50,12 +53,12 @@ const getPostDetails = async (postID) => {
     if (goodPostTypes.includes(data.type) && data.url) {
       let isPaywall = evaluateURL(data.url);
       if (isPaywall === true) {
-        console.log(`[${logTime()}] -> ${postID} -> URL is Paywalled: ${data.url}`);
-        addPaywallToArchive(data.id, data.url);
-        addPoint(convertURL(data.url), true);
+        console.log(`[${logTime()}] -> ${postID} -> URL is Paywalled (${convertURL(data.url)}) => ${data.url}`);
+        addPaywallToArchive(data.id, data.url, data);
+        addPoint(data, true);
       } else {
-        console.log(`[${logTime()}] -> ${postID} -> URL is NOT paywalled: ${data.url}`);
-        addPoint(convertURL(data.url), false);
+        console.log(`[${logTime()}] -> ${postID} -> URL is NOT paywalled (${convertURL(data.url)}) => ${data.url}`);
+        addPoint(data, false);
       }
     } else {
       if (data.url === "") {
@@ -96,7 +99,7 @@ const evaluateData = (fullData) => {
   }
 };
 
-const addPaywallToArchive = async (postID, postURL) => {
+const addPaywallToArchive = async (postID, postURL, wholeData) => {
   console.log(`[${logTime()}] -> ${postID} -> Adding paywalled URL to archive.today... [${postURL}]`);
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -112,26 +115,38 @@ const addPaywallToArchive = async (postID, postURL) => {
   await page.waitForTimeout(3000).then(() => {
     if (page.url().includes("/wip/")) {
       console.log(`[${logTime()}] -> ${postID} -> The page is currently being archived at [${page.url()}] -> [${postURL}]`);
+      // RECORD TO FIRESTORE
+      addRecord(wholeData, wipRemover(page.url()), false);
     } else {
       console.log(`[${logTime()}] -> ${postID} -> Already archived? See: ${page.url()} -> [${postURL}]`);
+      // RECORD TO FIRESTORE
+      addRecord(wholeData, page.url(), true);
     }
   });
 
   await browser.close();
 };
 
+// removes /wip/ from archive.today wip url. returns final archive url.
+const wipRemover = (wipURL) => {
+  return wipURL.replace("/wip/", "/");
+};
+
 // Firestore Interactions
+// ADD POINT (FIRESTORE)
+const addPoint = (wholeData, isPaywalled) => {
+  let url = convertURL(wholeData.url);
 
-const addPoint = (url, isPaywalled) => {
   if (isPaywalled) {
-    console.log(`[${logTime()}] -> [Firestore] Adding 1 point to: [${data.url}]`);
+    console.log(`[${logTime()}] -> [Firestore] Adding 1 point to: [${url}]`);
 
-    // if the site doesn't exist in Firestore, create a record for it make the total value 1. Else, add 1 point.
+    // UPDATE OR CREATE RECORD STAT
+    addRecordStat(wholeData.url);
 
     // Add point in general Paywalled
 
     console.log(`[${logTime()}] -> [Firestore] Adding 1 point to PAYWALLED`);
-    //
+    // ADD POINT TO PAYWALLED
     let currentValue = 0;
     db.collection("paywallStats")
       .doc("paywalled")
@@ -163,9 +178,75 @@ const addPoint = (url, isPaywalled) => {
         console.log(`[${logTime()}] -> [Firestore] Added 1 point to NOT PAYWALLED`);
       })
       .catch((error) => {
-        console.log(`[${logTime()}] -> [Firestore] Error getting document while adding Point:`, error);
+        console.log(`[${logTime()}] -> [Firestore] Error getting document while adding a point:`, error);
       });
   }
+};
+
+// ADD RECORD (FIRESTORE)
+const addRecord = (wholeData, archiveURL, alreadyArchived) => {
+  // add record
+  let newRecord = {
+    archiveURL: archiveURL,
+    alreadyArchived: alreadyArchived,
+    archivedTime: Date.now(),
+    postID: wholeData.id,
+    postTime: wholeData.time,
+    postTitle: wholeData.title,
+    postUser: wholeData.by,
+    url: wholeData.url,
+  };
+  // let currentValue = 0;
+  let convertedURL = convertURL(wholeData.url);
+
+  // add record to firestore
+  db.collection("records")
+    .doc()
+    .set(newRecord)
+    .then(() => {
+      console.log(`[${logTime()}] -> [Firestore] [addRecord] Record is successfully added. (${convertedURL})`);
+    })
+    .catch((error) => {
+      console.error(`[${logTime()}] -> [Firestore] [addRecord] Error recording the record. (${convertedURL})`, error);
+    });
+};
+
+const addRecordStat = (url) => {
+  let currentValue = 0;
+  let convertedURL = convertURL(url);
+  db.collection("paywallStats")
+    .doc(convertedURL)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        currentValue = doc.data().total;
+        db.collection("paywallStats")
+          .doc(url)
+          .update({
+            total: currentValue + 1,
+          })
+          .then(() => {
+            console.log(`[${logTime()}] -> [Firestore] [addRecordStat] Updated the record stat total. (${convertedURL})`);
+          });
+      } else {
+        // doc.data() will be undefined in this case
+        db.collection("paywallStats")
+          .doc(convertedURL)
+          .set({
+            name: convertedURL,
+            total: 1,
+          })
+          .then(() => {
+            console.log(`[${logTime()}] -> [Firestore] [addRecordStat] Added the record stat. (${convertedURL})`);
+          })
+          .catch((error) => {
+            console.log(`[${logTime()}] -> [Firestore] [addRecordStat] [else] Error creating the record stat. (${convertedURL})`, error);
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(`[${logTime()}] -> [Firestore] [addRecordStat] Error creating the record stat. (${convertedURL})`, error);
+    });
 };
 
 module.exports = {
