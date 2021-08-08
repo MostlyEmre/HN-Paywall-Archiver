@@ -115,12 +115,19 @@ const addPaywallToArchive = async (postID, postURL, wholeData) => {
   await page.waitForTimeout(3000).then(() => {
     if (page.url().includes("/wip/")) {
       console.log(`[${logTime()}] -> ${postID} -> The page is currently being archived at [${page.url()}] -> [${postURL}]`);
-      // RECORD TO FIRESTORE
-      addRecord(wholeData, wipRemover(page.url()), false);
+      setTimeout(() => {
+        console.log(`[${logTime()}] -> ${postID} -> Waiting 10 seconds to add the URL for ${page.url()} -> [${postURL}]`);
+        // RECORD TO FIRESTORE
+        addRecord(wholeData, page.url(), false);
+      }, 10000);
     } else {
-      console.log(`[${logTime()}] -> ${postID} -> Already archived? See: ${page.url()} -> [${postURL}]`);
-      // RECORD TO FIRESTORE
-      addRecord(wholeData, page.url(), true);
+      setTimeout(() => {
+        console.log(`[${logTime()}] -> ${postID} -> Waiting 10 seconds to add the URL for ${page.url()} -> [${postURL}]`);
+
+        console.log(`[${logTime()}] -> ${postID} -> Already archived? See: ${page.url()} -> [${postURL}]`);
+        // RECORD TO FIRESTORE
+        addRecord(wholeData, page.url(), true);
+      }, 10000);
     }
   });
 
@@ -128,9 +135,9 @@ const addPaywallToArchive = async (postID, postURL, wholeData) => {
 };
 
 // removes /wip/ from archive.today wip url. returns final archive url.
-const wipRemover = (wipURL) => {
-  return wipURL.replace("/wip/", "/");
-};
+// const wipRemover = (wipURL) => {
+//   return wipURL.replace("/wip/", "/");
+// };
 
 // Firestore Interactions
 // ADD POINT (FIRESTORE)
