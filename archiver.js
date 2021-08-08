@@ -214,19 +214,23 @@ const addRecord = (wholeData, archiveURL, alreadyArchived) => {
 const addRecordStat = (url) => {
   let currentValue = 0;
   let convertedURL = convertURL(url);
+  console.log(convertedURL);
   db.collection("paywallStats")
     .doc(convertedURL)
     .get()
     .then((doc) => {
       if (doc.exists) {
+        console.log(doc.data());
         currentValue = doc.data().total;
+        console.log(`[${logTime()}] -> [Firestore] [addRecordStat] (${convertedURL}) already exists with [Total = ${currentValue}]`);
+        let newValue = currentValue + 1;
         db.collection("paywallStats")
-          .doc(url)
+          .doc(convertedURL)
           .update({
-            total: currentValue + 1,
+            total: newValue,
           })
           .then(() => {
-            console.log(`[${logTime()}] -> [Firestore] [addRecordStat] Updated the record stat total. (${convertedURL})`);
+            console.log(`[${logTime()}] -> [Firestore] [addRecordStat] Updated the record stat total. (${convertedURL}) Total: ${currentValue + 1}`);
           });
       } else {
         // doc.data() will be undefined in this case
@@ -248,6 +252,8 @@ const addRecordStat = (url) => {
       console.log(`[${logTime()}] -> [Firestore] [addRecordStat] Error creating the record stat. (${convertedURL})`, error);
     });
 };
+
+// TODO: addUserStat
 
 module.exports = {
   getNewPosts,
