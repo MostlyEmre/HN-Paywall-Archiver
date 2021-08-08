@@ -30,15 +30,15 @@ export const Header = () => {
     <div className="text-lg">
       <h1 className="text-4xl font-extrabold mt-14 mb-10">HN Paywall Archiver</h1>
       <p className="my-6">
-        <a className="font-extrabold" href="https://en.wikipedia.org/wiki/Hacker_News" target="_blank" rel="noopener noreferrer">
+        <a className="link" href="https://en.wikipedia.org/wiki/Hacker_News" target="_blank" rel="noopener noreferrer">
           Hacker News
         </a>{" "}
         paywall archiver checks every new link submission on{" "}
-        <a className="font-extrabold" href="https://news.ycombinator.com/" target="_blank" rel="noopener noreferrer">
+        <a className="link" href="https://news.ycombinator.com/" target="_blank" rel="noopener noreferrer">
           news.ycombinator.com
         </a>{" "}
         for paywalls. After detecting a paywall, it submits the link to{" "}
-        <a className="font-extrabold" href="https://archive.today" target="_blank" rel="noopener noreferrer">
+        <a className="link" href="https://archive.today" target="_blank" rel="noopener noreferrer">
           archive.today
         </a>{" "}
         for archiving. And archiving removes paywalls. 🧠
