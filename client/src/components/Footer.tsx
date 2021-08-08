@@ -6,7 +6,7 @@ export const Footer = () => {
     <div>
       <p className="text-lg">
         Made by{" "}
-        <a href="http://" target="_blank" rel="noopener noreferrer">
+        <a href="https://emre.la" target="_blank" rel="noopener noreferrer">
           Emre
         </a>
         . Code is on{" "}
