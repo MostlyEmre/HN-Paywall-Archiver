@@ -41,7 +41,7 @@ export const Header = () => {
         <a className="font-extrabold" href="https://archive.today" target="_blank" rel="noopener noreferrer">
           archive.today
         </a>{" "}
-        for archiving.
+        for archiving. And archiving removes paywalls. 🧠
       </p>
 
       <p>
