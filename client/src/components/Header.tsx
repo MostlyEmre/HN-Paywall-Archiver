@@ -28,14 +28,25 @@ export const Header = () => {
 
   return (
     <div className="text-lg">
-      <h1 className="text-4xl font-extrabold my-6">HN Paywall Archiver</h1>
+      <h1 className="text-4xl font-extrabold mt-20 mb-10">HN Paywall Archiver</h1>
       <p className="my-6">
-        Hacker News paywall archiver checks every new link submission on <span>news.ycombinator.com</span> for paywalls. After detecting a paywall, it submits the link to <span>archive.today</span>{" "}
+        <a className="font-extrabold" href="https://en.wikipedia.org/wiki/Hacker_News" target="_blank" rel="noopener noreferrer">
+          Hacker News
+        </a>{" "}
+        paywall archiver checks every new link submission on{" "}
+        <a className="font-extrabold" href="https://news.ycombinator.com/" target="_blank" rel="noopener noreferrer">
+          news.ycombinator.com
+        </a>{" "}
+        for paywalls. After detecting a paywall, it submits the link to{" "}
+        <a className="font-extrabold" href="https://archive.today" target="_blank" rel="noopener noreferrer">
+          archive.today
+        </a>{" "}
         for archiving.
       </p>
 
       <p>
-        At least <span className="font-bold">{percentageOfPaywall(totalPaywalled, totalNotPaywalled).toFixed(2)}%</span> of all HN link submissions are paywalled.
+        At least <span className="font-bold">{percentageOfPaywall(totalPaywalled, totalNotPaywalled).toFixed(2)}%</span> of all* HN link submissions are paywalled. HN Paywall Archive has scanned{" "}
+        <span className="font-bold">{totalPaywalled + totalNotPaywalled}</span> links until now. <span className="font-bold">{totalPaywalled}</span> links were paywalled.
       </p>
     </div>
   );

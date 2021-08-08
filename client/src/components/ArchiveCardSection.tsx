@@ -38,8 +38,8 @@ export const ArchiveCardSection = () => {
   }, []);
   return (
     <div>
-      <h2 className="text-3xl font-extrabold my-6">Latest Archived Posts</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <h2 className="text-3xl font-extrabold my-10">Latest Archived Posts</h2>
+      <div className="">
         {records.map((record) => (
           <ArchiveCard key={uuidv4()} record={record} />
         ))}
