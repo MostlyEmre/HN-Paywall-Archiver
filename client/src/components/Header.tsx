@@ -28,7 +28,7 @@ export const Header = () => {
 
   return (
     <div className="text-lg">
-      <h1 className="text-4xl font-extrabold mt-20 mb-10">HN Paywall Archiver</h1>
+      <h1 className="text-4xl font-extrabold mt-14 mb-10">HN Paywall Archiver</h1>
       <p className="my-6">
         <a className="font-extrabold" href="https://en.wikipedia.org/wiki/Hacker_News" target="_blank" rel="noopener noreferrer">
           Hacker News

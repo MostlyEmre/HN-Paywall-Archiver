@@ -2,7 +2,7 @@ import React from "react";
 
 export const Legend = () => {
   return (
-    <div className="border-8 border-dashed m-auto border-gray-100 text-lg rounded-xl p-4 inline-block">
+    <div className="border-8 border-dashed m-auto border-gray-100 text-lg rounded-xl p-4 ">
       <h3 className="text-3xl font-extrabold mb-2">Legend</h3>
       <div className="inline-block mr-4">
         <p className="inline-block">
