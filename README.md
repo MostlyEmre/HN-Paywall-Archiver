@@ -2,8 +2,11 @@ Front-end and stats: [https://hpa.emre.la](https://hpa.emre.la)
 
 - [HN Paywall Archiver](#hn-paywall-archiver)
   - [Usage](#usage)
-  - [Screenshot](#screenshot)
-- [Front-end](#front-end)
+    - [Back-end](#back-end)
+    - [Front-end](#front-end)
+  - [Screenshots](#screenshots)
+    - [Back-end](#back-end-1)
+    - [Front-end](#front-end-1)
 
 # HN Paywall Archiver
 
@@ -19,12 +22,24 @@ This script is created to assist my [hnn](https://github.com/EmreYYZ/hnn) projec
 
 ## Usage
 
-Download the repo, open the terminal `cd` into the folder and `node app` to run the script indefinitely.
+### Back-end
 
-## Screenshot
+- Download the repo
+- Open the terminal, `cd` into the folder.
+- `node app` to run the script indefinitely.
 
-![HN paywall archiver is running and archiving](https://i.imgur.com/jDhEoUl.png "HN paywall archiver is running and archiving")
+### Front-end
 
-# Front-end
+- Download the repo
+- `cd` into `client`
+- `npm start` to view the front-end locally. (It receives the data from Firestore)
+
+## Screenshots
+
+### Back-end
+
+![HN paywall archiver is running and archiving](./screenshot-3.png "HN paywall archiver is running and archiving")
+
+### Front-end
 
 ![HN paywall archiver is running and archiving](./screenshot-2.png "HN paywall archiver is running and archiving")
