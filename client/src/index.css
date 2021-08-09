@@ -10,4 +10,8 @@
   .link {
     @apply transition duration-300 ease-in-out hover:text-purple-900 font-extrabold;
   }
+
+  .h2 {
+    @apply text-3xl font-extrabold my-10;
+  }
 }

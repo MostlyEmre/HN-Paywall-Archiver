@@ -32,13 +32,12 @@ export const ArchiveCardSection = () => {
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           setRecords((records: any) => [...records, doc.data()]);
-          console.log(doc.id, " => ", doc.data());
         });
       });
   }, []);
   return (
     <div>
-      <h2 className="text-3xl font-extrabold my-10">Latest Archived Posts</h2>
+      <h2 className="h2">Latest Archived Posts</h2>
       <div className="">
         {records.map((record) => (
           <ArchiveCard key={uuidv4()} record={record} />

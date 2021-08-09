@@ -9,15 +9,34 @@ export const Header = () => {
 
     db.collection("paywallStats")
       .doc("paywalled")
-      .onSnapshot((doc) => {
-        let docData = doc?.data();
-        setTotalPaywalled(docData?.total);
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          let docData = doc?.data();
+          setTotalPaywalled(docData?.total);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
       });
+
     db.collection("paywallStats")
       .doc("notPaywalled")
-      .onSnapshot((doc) => {
-        let docData = doc?.data();
-        setTotalNotPaywalled(docData?.total);
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          let docData = doc?.data();
+          setTotalNotPaywalled(docData?.total);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
       });
   }, []);
 
