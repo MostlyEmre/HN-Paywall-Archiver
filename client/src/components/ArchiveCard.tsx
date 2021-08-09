@@ -35,21 +35,30 @@ export const ArchiveCard: React.FC<IRecordProps> = ({ record }) => {
       </div>
 
       <div>
-        <p className="animation cursor-pointer hover:bg-gray-900 hover:text-white bg-gray-200 text-gray-700 text-lg inline-block rounded-xl px-4 py-2  m-1">
-          <a href={`https://news.ycombinator.com/user?id=${record.postUser}`} target="_blank" rel="noopener noreferrer">
-            {record.postUser}
-          </a>
-        </p>
-        <p className="animation cursor-pointer bg-gray-200 hover:bg-gray-900 hover:text-white text-gray-700 text-lg inline-block rounded-xl px-4 py-2  m-1">
-          <a href={record.url} target="_blank" rel="noopener noreferrer">
-            {convertURL(record.url)}
-          </a>
-        </p>
-        <p className="animation cursor-pointer hover:bg-gray-900 hover:text-white bg-gray-200 text-gray-700 text-lg inline-block rounded-xl px-4 py-2  m-1">
-          <a href={record.archiveURL} target="_blank" rel="noopener noreferrer">
-            Read without paywall
-          </a>
-        </p>
+        <a
+          className="animation cursor-pointer hover:bg-gray-900 hover:text-white bg-gray-200 text-gray-700 text-lg inline-block rounded-xl px-4 py-2  m-1"
+          href={`https://news.ycombinator.com/user?id=${record.postUser}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {record.postUser}
+        </a>
+        <a
+          className="animation cursor-pointer bg-gray-200 hover:bg-gray-900 hover:text-white text-gray-700 text-lg inline-block rounded-xl px-4 py-2  m-1"
+          href={record.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {convertURL(record.url)}
+        </a>
+        <a
+          className="animation cursor-pointer hover:bg-gray-900 hover:text-white bg-gray-200 text-gray-700 text-lg inline-block rounded-xl px-4 py-2  m-1"
+          href={record.archiveURL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Read without paywall
+        </a>
       </div>
     </div>
   );
