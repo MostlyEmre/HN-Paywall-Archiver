@@ -62,9 +62,11 @@ export const Stats = () => {
         })
         .map((site) => (
           <div key={uuidv4()} className="inline-block ">
-            <p className="animation px-4 py-3 border-2 shadow hover:shadow-lg cursor-default font-bold text-lg bg-gray-100 text-gray-900 rounded-xl mb-4 mr-4">
-              {site.name} <span className="ml-1 bg-gray-300 p-2 text-gray-900 rounded-lg">{site.total}</span>
-            </p>
+            <a href={`https://${site.name}`} target="_blank" rel="noopener noreferrer">
+              <p className="animation px-4 py-3 border-2 shadow hover:shadow-lg cursor-pointer font-bold text-lg bg-gray-100 text-gray-900 rounded-xl mb-4 mr-4">
+                {site.name} <span className="ml-1 bg-gray-300 p-2 text-gray-900 rounded-lg">{site.total}</span>
+              </p>
+            </a>
           </div>
         ))}
     </div>
