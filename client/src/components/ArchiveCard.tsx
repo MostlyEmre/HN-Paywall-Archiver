@@ -22,7 +22,7 @@ export const ArchiveCard: React.FC<IRecordProps> = ({ record }) => {
   };
 
   return (
-    <div className="shadow border-gray-200 border-8 bg-gray-50 rounded-xl px-6 py-4  mr-4 my-4">
+    <div className="animation shadow border-gray-200 hover:border-gray-900 hover:shadow-lg border-4 bg-gray-50 rounded-xl px-6 py-4  mr-4 my-4">
       <div className="inline-block m-2">
         <h1 className="text-gray-900 font-extrabold text-2xl inline-block">
           <a href={`https://news.ycombinator.com/item?id=${record.postID}`} target="_blank" rel="noopener noreferrer">
