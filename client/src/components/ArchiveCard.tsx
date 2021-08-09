@@ -1,4 +1,5 @@
 import React from "react";
+import TimeAgo from "react-timeago";
 
 interface IRecordProps {
   record: {
@@ -35,6 +36,9 @@ export const ArchiveCard: React.FC<IRecordProps> = ({ record }) => {
       </div>
 
       <div>
+        <p className="bg-gray-200 text-gray-700 text-lg inline-block rounded-xl px-4 py-2  m-1">
+          <TimeAgo date={record.postTime * 1000} />
+        </p>
         <a
           className="animation cursor-pointer hover:bg-gray-900 hover:text-white bg-gray-200 text-gray-700 text-lg inline-block rounded-xl px-4 py-2  m-1"
           href={`https://news.ycombinator.com/user?id=${record.postUser}`}
