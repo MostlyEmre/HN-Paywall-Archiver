@@ -3,6 +3,7 @@ Front-end and stats: [https://hpa.emre.la](https://hpa.emre.la)
 - [HN Paywall Archiver](#hn-paywall-archiver)
   - [Usage](#usage)
   - [Screenshot](#screenshot)
+- [Front-end](#front-end)
 
 # HN Paywall Archiver
 
@@ -23,3 +24,7 @@ Download the repo, open the terminal `cd` into the folder and `node app` to run 
 ## Screenshot
 
 ![HN paywall archiver is running and archiving](https://i.imgur.com/jDhEoUl.png "HN paywall archiver is running and archiving")
+
+# Front-end
+
+![HN paywall archiver is running and archiving](./screenshot-2.png "HN paywall archiver is running and archiving")
