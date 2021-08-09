@@ -1,9 +1,9 @@
 import React from "react";
 
-export const Chart = () => {
+export const Treemap = () => {
   return (
     <div>
-      <p>This is a chart</p>
+      <svg />
     </div>
   );
 };
