@@ -1,4 +1,4 @@
-Front-end and stats: [https://hpa.emre.la](https://hpa.emre.la)
+Front-end and stats: [https://hpa.emre.ca](https://hpa.emre.ca)
 
 - [HN Paywall Archiver](#hn-paywall-archiver)
   - [Usage](#usage)
