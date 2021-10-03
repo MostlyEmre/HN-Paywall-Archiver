@@ -1,6 +1,12 @@
+require("dotenv").config();
 const axios = require("axios").default;
 const puppeteer = require("puppeteer");
 const dayjs = require("dayjs");
+const firebase = require("firebase");
+require("firebase/auth");
+
+let email = process.env.EMAIL;
+let password = process.env.PASS;
 
 // import firestore connection
 const { db } = require("./firestore");
@@ -16,11 +22,25 @@ let latestHNPost;
 
 const goodPostTypes = ["story"];
 
-// fetch latest HN posts
+async function getStarted() {
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      var user = userCredential.user;
 
-setInterval(() => {
-  getNewPosts();
-}, 5000);
+      // fetch latest HN posts
+      setInterval(() => {
+        getNewPosts();
+      }, 5000);
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
+}
 
 // GETS NEW POSTS FROM FIREBASE HN API
 // CHECKS IF THE DATA IS VALID
@@ -265,4 +285,5 @@ const addRecordStat = (url) => {
 module.exports = {
   getNewPosts,
   latestHNPost,
+  getStarted,
 };
