@@ -24,7 +24,7 @@ export const Stats = () => {
           querySnapshot.forEach((doc) => {
             if (doc.id.includes("medium.com")) {
               mediumTotal = mediumTotal + doc.data().total;
-            } else if (doc.data().name === "Not Paywalled" || doc.data().total <= 2 || doc.data().name === "Paywalled") {
+            } else if (doc.data().name === "Not Paywalled" || doc.data().total <= 10 || doc.data().name === "Paywalled") {
             } else {
               setSites((sites) => [...sites, doc.data()]);
             }
