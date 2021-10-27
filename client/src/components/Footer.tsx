@@ -12,7 +12,7 @@ export const Footer = () => {
         <div className="mt-4 mr-6">
           <p className="text-lg">
             Made by{" "}
-            <a className="link" href="https://emre.la" target="_blank" rel="noopener noreferrer">
+            <a className="link" href="https://emre.ca" target="_blank" rel="noopener noreferrer">
               Emre
             </a>
             . The code is on{" "}
@@ -20,7 +20,7 @@ export const Footer = () => {
               GitHub
             </a>
             . HN Paywall Archiver was created to help with my paywall-aware HN reader project,{" "}
-            <a className="link" href="https://hn.emre.la" target="_blank" rel="noopener noreferrer">
+            <a className="link" href="https://hn.emre.ca" target="_blank" rel="noopener noreferrer">
               HNN
             </a>
             .
