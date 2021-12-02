@@ -18,7 +18,7 @@ Archive.is doesn't have a public API or anything that makes programatically arch
 
 Firebase HN API uses Firebase specific `snapshot` feature instead of Websocket to update the requester automatically. So I decided not to lose time on using their specific way of doing things and just used `setInterval()`.
 
-This script is created to assist my [hnn](https://github.com/EmreYYZ/hnn) project. But I guess it helps humanity as a side effect by archiving the web.
+This script is created to assist my [hnn](https://github.com/MostlyEmre/hnn) project. But I guess it helps humanity as a side effect by archiving the web.
 
 ## Usage
 
