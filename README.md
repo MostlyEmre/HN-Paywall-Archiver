@@ -1,3 +1,5 @@
+# No longer running. Feel free to run it yourself.
+
 Front-end and stats: [https://hpa.emre.ca](https://hpa.emre.ca)
 
 - [HN Paywall Archiver](#hn-paywall-archiver)
